@@ -21,27 +21,10 @@ jobs:
         uses: actions/checkout@v7
 
       - name: Setup Rust
-        uses: dtolnay/rust-toolchain@stable
+        uses: actions-rust-lang/setup-rust-toolchain@v2
         with:
+          build-warnings: ""
           components: rustfmt, clippy
-
-      - name: Cache Cargo registry
-        uses: actions/cache@v6
-        with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-          key: cargo-registry-${{ runner.os }}-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: |
-            cargo-registry-${{ runner.os }}-
-
-      - name: Cache Cargo build
-        uses: actions/cache@v6
-        with:
-          path: target
-          key: cargo-build-${{ runner.os }}-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: |
-            cargo-build-${{ runner.os }}-
 
       - name: Check formatting
         run: cargo fmt --all -- --check
@@ -65,17 +48,10 @@ jobs:
         uses: actions/checkout@v7
 
       - name: Setup Rust
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: Cache Cargo registry
-        uses: actions/cache@v6
+        uses: actions-rust-lang/setup-rust-toolchain@v2
         with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-          key: cargo-registry-${{ runner.os }}-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: |
-            cargo-registry-${{ runner.os }}-
+          build-warnings: ""
+          cache-bin: false
 
       - name: Cache Cargo security tools
         uses: actions/cache@v6
@@ -129,8 +105,10 @@ jobs:
           echo "$PWD/sonar-scanner/bin" >> $GITHUB_PATH
 
       - name: Setup Rust for coverage
-        uses: dtolnay/rust-toolchain@stable
+        uses: actions-rust-lang/setup-rust-toolchain@v2
         with:
+          build-warnings: ""
+          cache: false
           components: llvm-tools-preview
 
       - name: Cache Cargo registry
