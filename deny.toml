@@ -2,11 +2,7 @@
 all-features = false
 
 [advisories]
-ignore = [
-    # Transitive via sqlx-mysql -> rsa; no patched release currently available.
-    # Tracked in CI until upstream publishes a fix.
-    "RUSTSEC-2023-0071",
-]
+ignore = []
 
 [licenses]
 allow = [
